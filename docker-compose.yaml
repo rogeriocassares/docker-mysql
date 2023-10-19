@@ -1,0 +1,27 @@
+version: "3"
+services:
+  mysql:
+    container_name: mysql
+    restart: always
+    image: mysql:8.1.0
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+        - ./mysql/var/lib:/var/lib/mysql
+    networks:
+        - mysql-network
+
+  adminer:
+    image: adminer:4.8.1
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - mysql-network
+
+networks:
+    mysql-network:
+        driver: bridge
